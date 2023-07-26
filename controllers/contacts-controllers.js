@@ -1,8 +1,6 @@
-import contactsService from "../models/contacts.js";
 import { HttpError } from "../helpers/index.js";
 import { ctrlWrapper } from "../decorators/index.js";
 import Contact from "../models/Contact.js";
-import contactsAddSchema from "../schemas/contacts-schemas.js";
 
 const getAll = async (req, res) => {
   const result = await Contact.find({}, "-createAt -updateAt");
