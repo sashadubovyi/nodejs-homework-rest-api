@@ -1,11 +1,16 @@
-import contactsService from "../models/contacts.js";
 import { HttpError } from "../helpers/index.js";
 import { ctrlWrapper } from "../decorators/index.js";
 import Contact from "../models/Contact.js";
-import contactsAddSchema from "../schemas/contacts-schemas.js";
 
 const getAll = async (req, res) => {
-  const result = await Contact.find({}, "-createAt -updateAt");
+  const { _id: owner } = req.user;
+  const { page = 1, limit = 10, favorite } = req.query;
+  const skip = (page - 1) * limit;
+  const query = favorite ? { owner, favorite: true } : { owner };
+  const result = await Contact.find(query, "-createAt -updateAt", {
+    skip,
+    limit,
+  }).populate("owner", "email subscription");
   res.json(result);
 };
 
@@ -19,7 +24,8 @@ const getById = async (req, res) => {
 };
 
 const add = async (req, res) => {
-  const result = await Contact.create(req.body);
+  const { _id: owner } = req.user;
+  const result = await Contact.create({ ...req.body, owner });
   res.status(201).json(result);
 };
 
