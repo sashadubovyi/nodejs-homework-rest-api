@@ -28,5 +28,5 @@ userSchema.pre("findOneAndUpdate", allowUpdateValidate);
 userSchema.post("save", handleSaveError);
 userSchema.post("findOneAndUpdate", handleSaveError);
 
-const User = model("users", userSchema);
+const User = model("user", userSchema);
 export default User;
