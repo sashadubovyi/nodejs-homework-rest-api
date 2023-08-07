@@ -1,6 +1,6 @@
 import express from "express";
 import contactsControllers from "../../controllers/contacts-controllers.js";
-import { authenticate, isValidId } from "../../middlewares/index.js";
+import { authenticate, isValidId, upload } from "../../middlewares/index.js";
 import { validateBody } from "../../decorators/index.js";
 import contactsSchemas from "../../schemas/contacts-schemas.js";
 
@@ -14,6 +14,7 @@ contactsRouter.get("/:contactId", isValidId, contactsControllers.getById);
 
 contactsRouter.post(
   "/",
+  upload.single("avatar"),
   validateBody(contactsSchemas.contactsAddSchema),
   contactsControllers.add
 );
