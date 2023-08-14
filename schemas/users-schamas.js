@@ -12,7 +12,12 @@ const userSigninSchama = Joi.object({
   email: Joi.string().pattern(emailRegexp).required(),
 });
 
+const userEmailSchema = Joi.object({
+  email: Joi.string().pattern(emailRegexp).required(),
+});
+
 export default {
   userSignupSchama,
   userSigninSchama,
+  userEmailSchema,
 };
